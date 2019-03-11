@@ -1,0 +1,72 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript">title_str;</script>
+</head>
+   <body>
+   		<h1 id="page_title">?</h1>
+     	<h2>環境：</h2>
+     	<ul>
+	      	<li>Apache2</li>
+	      	<li>Tomcat8</li>
+	      		<ul>
+	      			<li>Java8</li>
+	      		</ul>
+	      	<li>PHP7</li>
+	      	<li>mod_jk</li>
+     	</ul>
+
+	    <h2>設定重点：</h2>
+	    <ul>
+	    	<li>Apacheが.phpファイルを動かすように</li>
+	    	<ul>
+		    	CGI... (補充要)
+		    </ul>
+	    	<li>有効化すべきのApacheモデュール：</li>
+	    	<ul>
+	    		<li>proxy</li>
+	    		<li>proxy_ajp</li>
+	    	</ul>
+	    	<li>Tomcat8のDocumentRootをApacheのと同じにしたいなら：</li>
+	    		<pre><code>
+	mkdir /var/lib/tomcat8/&ltLinkName&gt
+	ln -Fs &ltApache DocumentRoot&gt /var/lib/tomcat8/&ltLinkName&gt/ROOT
+				</code></pre>
+	    	<li>同じPort(80)でApacheとTomcat一緒にリクエストを受ける：</li>
+	    		<pre><code>
+	# mod_jk configuration
+	# JkMount /jsp worker1
+	# JkMount /jsp/* worker1
+
+	ProxyRequests       Off
+	ProxyPreserveHost   On
+
+	<Proxy *>
+	        Order deny,allow
+	        Deny from all
+	        Allow from all
+	</Proxy>
+
+	ProxyPassMatch ^/(.*\.jsp)$ ajp://localhost:8009/$1
+	    		</code></pre>
+	    </ul>
+
+	    <h2>注意：</h2>
+	    <ul>
+	    	<li>Tomcat8のスタートが非常に遅い</li>
+	    	<ul>
+	    		<p>ディフォルトのJava乱数生成器は乱数のエントロピーを増やすため、時間がかかります。システムのディフォルトの生成器を使ってこの問題を解決できます。<br>
+	    			<pre><code>/usr/lib/jvm/java-8-openjdk-armhf/jre/lib/security/java.security</code></pre> の中に、<br>
+	    			<pre><code>securerandom.source</code></pre> という変数を file:/dev/./urandom にセットします。
+	    		</p></ul>
+	    </ul>
+   </body>
+</html>
+
+<script type="text/javascript">
+	title_str = "HSYSプロトタイプ実装ノート";
+
+	document.title = title_str;
+	document.getElementById("page_title").innerHTML = title_str;
+</script>
