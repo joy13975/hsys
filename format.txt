@@ -1,0 +1,42 @@
+table: personnel
+	id
+	last_update_date
+	last_name_main
+	last_name_spelling_jp
+	last_name_spelling_en
+	first_name_main
+	first_name_spelling_jp
+	first_name_spelling_en
+	gender
+	birth_date
+
+	home_address
+	nearest_train_line
+	nearest_train_station
+
+	employer
+
+table: academic_history
+	pid
+	school_name
+	start_date
+	end_date
+	subject_name
+	level
+	country
+
+table: qualifications
+	pid
+	name
+	acquired_date
+	description
+
+table: experience
+	pid
+	name
+	type
+	start_date
+	end_date
+	description
+
+
