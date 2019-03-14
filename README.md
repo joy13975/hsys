@@ -37,3 +37,13 @@
 
 `/usr/lib/jvm/java-8-openjdk-armhf/jre/lib/security/java.security`
 このファイルの中に、`securerandom.source`という変数を`file:/dev/./urandom`にセットします。
+
+### "can't load mysql driver java.lang.ClassNotFoundException: com.mysql.jdbc.Driver"
+MySqlのConnectorのJarファイルがTomcatのclasspathに入ってないからです。
+
+[こちら](https://dev.mysql.com/downloads/file/?id=484819)からMySQLのJava ConnectorのJarファイルをダウンロードし、`/var/lib/tomcat8/lib`に置きます。
+
+### "SQL Error 1064"
+MySQL WorkBenchでデータベースを操作するときこのエラーはよく出ます。
+
+このエラーが出る原因はMySQLのサーバーがMariaDBであることです。MariaDBは今までMySQL 5.5のシンタックスまでサポートしていますので、MySQL 8のVISIBLE/INVISIBLEなどのキーワードを使わないようにすれば解決きます。
