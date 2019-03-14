@@ -6,6 +6,8 @@
 
 <?php
 echo "Hello World!";
+echo "<br>";
+echo "3+3=".(3+3);
 ?> 
 
 </body>
