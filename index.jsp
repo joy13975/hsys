@@ -1,4 +1,4 @@
-<%--@ page contentType="text/html" pageEncoding="UTF-8" --%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 
 <html>
 
@@ -10,8 +10,8 @@
 <body>
   株式会社HNS
   <ul>
-    <li class="no-bullet"><a href="hns_input.jsp">入力</a></li>
-    <li class="no-bullet"><a href="hns_search.jsp">検索</a></li>
+    <li class="no-bullet"><a href="hns/input.jsp">入力</a></li>
+    <li class="no-bullet"><a href="hns/search.jsp">検索</a></li>
   </ul>
 </body>
 
