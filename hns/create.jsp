@@ -5,7 +5,26 @@
     <title>株式会社HNS - Create</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/create.js"></script>
+    <!-- <script src="js/create.js"></script> -->
+    <!-- Bootstrap 4.3.1 compiled and minified CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Font Awesome 4.7.0 -->
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <!-- jQuery 3.3.1 library -->
+    <script src="../js/jquery.min.js"></script>
+    <!-- Popper JS 1.14.7 -->
+    <script src="../js/popper.min.js"></script>
+    <!-- 4.3.1 compiled JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Bootstrap 4 Switch Button (Toggle) -->
+    <link rel="stylesheet" href="../css/bootstrap4-toggle.min.css">
+    <script src="../js/bootstrap4-toggle.min.js"></script>
+    <!-- Moment 2.22.2 for Japanese dates -->
+    <script src="../js/moment.min.js" type="text/javascript"></script>
+    <script src="../js/locale/ja.js" type="text/javascript"></script>
+    <!-- Bootstrap DatePicker -->
+    <link rel="stylesheet" href="../css/bootstrap-datetimepicker.min.css">
+    <script src="../js/bootstrap-datetimepicker.min.js"></script>
 </head>
 
 <body>
@@ -14,68 +33,74 @@
         <span class="inline float-right">フォーム更新日：2019/3/15</span>
     </div>
     <h2>個人</h2>
-    <form>
-        <table>
-            <tr>
-                <th>漢字名前</th>
-                <td colspan="4"><input type="text" name="last_name_kanji" placeholder="氏"></td>
-                <td colspan="3"><input type="text" name="first_name_kanji" placeholder="名"></td>
-            </tr>
-            <tr>
-                <th>フリガナ</th>
-                <td colspan="4"><input type="text" name="last_name_furigana" placeholder="シ"></td>
-                <td colspan="3"><input type="text" name="first_name_furigana" placeholder="メイ"></td>
-            </tr>
-            <tr>
-                <th>英字</th>
-                <td colspan="4"><input type="text" name="last_name_eng" placeholder="Mei"></td>
-                <td colspan="3"><input type="text" name="first_name_eng" placeholder="Shi"></td>
-            </tr>
-            <tr>
-                <th>性別</th>
-                <td colspan="3">
-                    <select class="select-center" name="gender">
-                        <option class="option-center" value="male">男</option>
-                        <option class="option-center" value="female">女</option>
-                        <option class="option-center" value="other">他</option>
-                    </select>
-                </td>
-                <th>現在所属</th>
-                <td colspan="3"><input type="text" name="employee" placeholder="〇〇社"></td>
-            </tr>
-            <tr>
-                <th>郵便番号</th>
-                <td colspan="3">
-                    <div style="display: inline-block">
-                        <input type="number" class="single-number-input" name="postcode1" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                        <input type="number" class="single-number-input" name="postcode2" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                        <input type="number" class="single-number-input" name="postcode3" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                    </div>
-                    -
-                    <div style="display: inline-block">
-                        <input type="number" class="single-number-input" name="postcode4" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                        <input type="number" class="single-number-input" name="postcode5" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                        <input type="number" class="single-number-input" name="postcode6" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                        <input type="number" class="single-number-input" name="postcode7" placeholder="0" min="0" max="9" onkeydown="limitNumber(event, this, 1);">
-                    </div>
-                </td>
-                <th>町番地号</th>
-                <td colspan="3">[int]-[int]-[int]</td>
-            </tr>
-        </table>
+    <hr>
+    <form class="padding10">
+        <label>名前</label>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control margin10" id="last_name_kanji" placeholder="氏（例：派遣）" required>
+                <span></span>
+                <input type="text" class="form-control margin10" id="first_name_kanji" placeholder="名（例：太郎）" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>フリガナ</label>
+            <div class="input-group">
+                <input type="text" class="form-control margin10" id="last_name_furigana" placeholder="氏（例：ハケン）" required>
+                <span></span>
+                <input type="text" class="form-control margin10" id="first_name_furigana" placeholder="名（例：タロウ）" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>英字</label>
+            <div class="input-group">
+                <input type="text" class="form-control margin10" name="last_name_eng" placeholder="氏（例：Haken）" required>
+                <span></span>
+                <input type="text" class="form-control margin10" name="first_name_eng" placeholder="名（例：Tarou）" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="margin10">
+                    <input type="checkbox" class="form-control margin10" name="gender" checked data-toggle="toggle" data-on="男" data-off="女" data-onstyle="primary" data-offstyle="danger" required>
+                </div>
+                <input type="text" class="form-control margin10" name="employee" placeholder="所属（例：HNS）" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>住所</label>
+            <div class="input-group">
+                <input type="text" class="form-control margin10" name="postcode" placeholder="郵便番号（例：533-0033）" required>
+                <span></span>
+                <input type="text" class="form-control margin10" name="address1" placeholder="都道府県…" disabled="">
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control margin10" name="address2" placeholder="町番地号（例：6-6-9）" required>
+                <span></span>
+                <input type="text" class="form-control margin10" name="address3" placeholder="建物名前と部屋番号（例：最高マンション111号）" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>最寄駅</label>
+            <div class="input-group" id="station_info">
+                <input type="text" class="form-control margin10" id="nearest_train_id" name="nearest_train" placeholder="線（例：御堂筋線）" required>
+                <span></span>
+                <input type="text" class="form-control margin10" name="nearest_station" placeholder="駅（例：梅田）" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>生年月日</label>
+            <div class="input-group date" id="birthday">
+                <label for="birthday" class="pt-2 pr-2">日付:</label>
+                <input type="text" class="form-control" />
+                <span class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">提出</button>
     </form>
     <table>
-        <tr>
-            <th>建物名前と部屋番号</th>
-            <td colspan="9">string</td>
-        </tr>
-        <tr>
-            <th>最寄駅</th>
-            <td colspan="3">string</td>
-            <th>線</th>
-            <td colspan="4">string</td>
-            <th>駅</th>
-        </tr>
         <tr>
             <th>生年月日</th>
             <td colspan="4">[date]=(int)歳</td>
