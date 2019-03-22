@@ -6,24 +6,18 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- Bootstrap 4.3.1 compiled and minified CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-4.3.1.min.css">
     <!-- Font Awesome 4.7.0 -->
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/font-awesome-4.7.0.min.css">
     <!-- jQuery 3.3.1 library -->
-    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
     <!-- Popper JS 1.14.7 -->
-    <script src="../js/popper.min.js"></script>
+    <script src="../js/popper-1.14.7.min.js"></script>
     <!-- 4.3.1 compiled JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap-4.3.1.min.js"></script>
     <!-- Bootstrap 4 Switch Button (Toggle) -->
     <link rel="stylesheet" href="../css/bootstrap4-toggle.min.css">
     <script src="../js/bootstrap4-toggle.min.js"></script>
-    <!-- Moment 2.22.2 for Japanese dates -->
-    <script src="../js/moment.min.js" type="text/javascript"></script>
-    <script src="../js/locale/ja.js" type="text/javascript"></script>
-    <!-- Bootstrap DatePicker -->
-    <link rel="stylesheet" href="../css/bootstrap-datetimepicker.min.css">
-    <script src="../js/bootstrap-datetimepicker.min.js"></script>
     <script src="js/create.js"></script>
 </head>
 
@@ -188,35 +182,33 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2">
-                    <label class="pt-2 float-right">資格．研修</label>
-                </div>
-                <div class="col-10">
-                    <div class="row">
-                        <div class="col-1">
-                            <label>#</label>
+                <div class="col-12">
+                    <div class="row" id="qualifications-header">
+                        <div class="col-8 text-center">
+                            <label>資格．研修</label>
                         </div>
-                        <div class="col-6 text-center">
-                            <label>Name</label>
-                        </div>
-                        <div class="col-4 text-center">
-                            <label>Date</label>
+                        <div class="col-3 text-center">
+                            <label>取得年月日</label>
                         </div>
                         <div class="col-1">
                         </div>
                     </div>
                     <hr style="margin: 1px">
-                    <div class="row">
-                        <div class="col-1 align-middle">1
+                    <div class="row" id="qualificaiton">
+                        <div class="col-8">
+                            <input type="text" class="form-control" placeholder="例：普通自動車運転免許" required>
                         </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control" required>
-                        </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <input type="date" class="form-control">
                         </div>
-                        <div class="col-1 align-middle">
-                            <i class="fa fa-trash fa-lg"></i>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-info fa fa-times-circle table-button" onclick="delete_qualification(this);"></button>
+                        </div>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col-11"></div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-info fa fa-plus table-button" onclick="add_qualification(this);"></button>
                         </div>
                     </div>
                 </div>
@@ -237,19 +229,6 @@
             </div>
         </div>
     </form>
-    <table>
-        <tr>
-            <th colspan="8">資格．研修</th>
-            <th colspan="2">取得年月日</th>
-        </tr>
-        <tr>
-            <td colspan="8">string</td>
-            <td colspan="2">date</td>
-        </tr>
-        <tr>
-            <td colspan="10">(new btn)</td>
-        </tr>
-    </table>
     <h2>技術経歴</h2>
     <p>*職務：PM（プロジェクトマネージャー）　PL（プロジェクトリーダー）　SE（システム．エンジニア） SE/PG（SE兼PG） PG（プログラマー） OP（オプレータ）</p>
     <table>

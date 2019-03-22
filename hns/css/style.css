@@ -5,3 +5,12 @@
 .space {
 	padding-top: 12px;
 }
+
+.center-content {
+	display: inline-flex; /* make element size relative to content */
+	align-items: center; /* vertical alignment of items */
+}
+
+.table-button {
+	height: 36px;
+}
