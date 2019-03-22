@@ -19,3 +19,10 @@
 .table-splitter {
 	display: none;
 }
+
+.span-center-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+}
