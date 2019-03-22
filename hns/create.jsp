@@ -126,7 +126,7 @@
                         <label class="pt-2 float-right">住所郵便番号</label>
                     </div>
                     <div class="col-5">
-                        <input type="text" class="form-control" name="postcode" placeholder="例：533-0033" required>
+                        <input type="text" class="form-control" name="postcode" placeholder="例：531-0071" required>
                     </div>
                     <div class="col-5">
                         <input type="text" class="form-control" name="address1" placeholder="都道府県…" disabled="">
@@ -137,7 +137,7 @@
                         <label class="pt-2 float-right">町番地号</label>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" name="address2" placeholder="例：6-6-9" required>
+                        <input type="text" class="form-control" name="address2" placeholder="例：1-3-6" required>
                         <span></span>
                     </div>
                     <div class="col-3">
@@ -205,7 +205,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="list-group-item">
+                                <div class="table-splitter"></div>
+                                <!-- <li class="list-group-item">
                                     <div class="row" id="qual_row">
                                         <div class="col-7">
                                             <input type="text" class="form-control" placeholder="例：普通自動車運転免許" required>
@@ -214,17 +215,17 @@
                                             <input type="date" class="form-control">
                                         </div>
                                         <div class="col-2 text-center">
-                                            <button type="button" class="btn btn-danger fa fa-times-circle table-button" onclick="delete_qual(this);"></button>
+                                            <button type="button" class="btn btn-danger fa fa-times-circle table-button" onclick="delete_row(this);"></button>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="row pt-2">
                     <div class="col-12 text-center">
-                        <button type="button" class="btn btn-info fa fa-plus table-button" onclick="add_qual();"></button>
+                        <button type="button" class="btn btn-info fa fa-plus table-button" onclick="add_row(this, 'qualification');"></button>
                     </div>
                 </div>
             </div>
@@ -235,7 +236,8 @@
                 <div class="row">
                     <div class="card">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
+                            <div class="table-splitter"></div>
+                            <!-- <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-11">
                                         <div class="row" name="case_duration">
@@ -405,16 +407,16 @@
                                         </div>
                                     </div>
                                     <div class="col-1 text-center" style="display: flex">
-                                        <button type="button" class="btn btn-danger fa fa-times-circle table-button" onclick="delete_exp(this);"></button>
+                                        <button type="button" class="btn btn-danger fa fa-times-circle table-button" onclick="delete_row(this);"></button>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
                 <div class="row pt-2">
                     <div class="col-12 text-center">
-                        <button type="button" class="btn btn-info fa fa-plus table-button" onclick="add_exp();"></button>
+                        <button type="button" class="btn btn-info fa fa-plus table-button" onclick="add_row(this, 'experience');"></button>
                     </div>
                 </div>
             </div>
