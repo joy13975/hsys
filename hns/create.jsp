@@ -1,5 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<html>
+<html lang="jp">
 
 <head>
     <title>株式会社HNS - Create</title>
@@ -22,6 +22,9 @@
     <script src="../js/bootstrap-tokenfield.min.js"></script>
     <link rel="stylesheet" href="../css/bootstrap-tokenfield.css">
     <script src="js/create.js"></script>
+    <!-- Bootstrap Datepicker 1.6.4 -->
+    <script src="../js/bootstrap-datepicker-1.6.4.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap-datepicker-1.6.4.min.css">
 </head>
 
 <body>
@@ -70,7 +73,7 @@
                             <span class="input-group-prepend">
                                 <span class="input-group-text">名</span>
                             </span>
-                            <input type="text" class="form-control" name="firstname_furigana" placeholder="例：タロウ）" required>
+                            <input type="text" class="form-control" name="firstname_furigana" placeholder="例：タロウ" required>
                         </div>
                     </div>
                 </div>
@@ -91,7 +94,7 @@
                             <span class="input-group-prepend">
                                 <span class="input-group-text">名</span>
                             </span>
-                            <input type="text" class="form-control" name="firstname_eng" placeholder="例：Tarou）" required>
+                            <input type="text" class="form-control" name="firstname_eng" placeholder="例：Tarou" required>
                         </div>
                     </div>
                 </div>
@@ -100,7 +103,7 @@
                         <label class="pt-2 float-right">所属</label>
                     </div>
                     <div class="col-10">
-                        <input type="text" class="form-control" name="employee" placeholder="例：株式会社HNS" required>
+                        <input type="text" class="form-control" name="employee" placeholder="例：株式会社HNS" value="株式会社HNS" required>
                     </div>
                 </div>
                 <div class="row">
@@ -109,7 +112,7 @@
                     </div>
                     <div class="col-5">
                         <div class="input-group">
-                            <input id="bd_picker" name="birthdate" type="date" class="form-control">
+                            <input type="text" id="bd_picker" is-datepicker="yes" name="birthdate" class="form-control">
                             <span class="input-group-append">
                                 <span class="input-group-text" id="age_text">歳</span>
                             </span>
@@ -180,7 +183,7 @@
                             <span class="input-group-prepend">
                                 <span class="input-group-text">卒業</span>
                             </span>
-                            <input id="gd_picker" name="graduation" type="date" class="form-control">
+                            <input type="text" id="gd_picker" is-datepicker="yes" name="graduation" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -237,180 +240,6 @@
                     <div class="card">
                         <ul class="list-group list-group-flush">
                             <div class="table-splitter"></div>
-                            <!-- <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-11">
-                                        <div class="row" name="case_duration">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">開始</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <input id="exp_start_picker" name="start" type="date" class="form-control">
-                                            </div>
-                                            <div class="col-1">
-                                                <label class="pt-2 float-right">終了</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <input id="exp_end_picker" name="end" type="date" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row" name="case_name">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">案件名</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" placeholder="例：〇〇ソフトウェアエンジニア" required>
-                                            </div>
-                                        </div>
-                                        <div class="row" name="job_desc">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">内容</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <textarea class="form-control" rows="3" min required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row" name="tasks">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">業務</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="row group-border m-0 pb-2">
-                                                    <div class="col-12">
-                                                        <div class="row">
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb1">
-                                                                <label class="form-check-label" for="cb1">
-                                                                    調査分析
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb2">
-                                                                <label class="form-check-label" for="cb2">
-                                                                    要件定義
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb3">
-                                                                <label class="form-check-label" for="cb3">
-                                                                    基本設計
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb4">
-                                                                <label class="form-check-label" for="cb4">
-                                                                    詳細設計
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb5">
-                                                                <label class="form-check-label" for="cb5">
-                                                                    プログラミング
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb6">
-                                                                <label class="form-check-label" for="cb6">
-                                                                    単体テスト
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb7">
-                                                                <label class="form-check-label" for="cb7">
-                                                                    結合テスト
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb8">
-                                                                <label class="form-check-label" for="cb8">
-                                                                    総合テスト
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb9">
-                                                                <label class="form-check-label" for="cb9">
-                                                                    保守．運用
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input cb0="form-check-input" type="checkbox" value="" id="cb10">
-                                                                <label class="form-check-label" for="cb10">
-                                                                    ヘルプデスク
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-2">
-                                                                <label class="pt-2 float-right">その他</label>
-                                                            </div>
-                                                            <div class="col-10">
-                                                                <input type="text" class="form-control" name="task_other">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" name="scale">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">全体規模</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="input-group">
-                                                    <input name="total_scale" type="number" step="1" min="1" value="1" class="form-control">
-                                                    <span class="input-group-append">
-                                                        <span class="input-group-text" id="total_scale_text">人</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-1">
-                                                <label class="pt-2 float-right">チーム</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="input-group">
-                                                    <input name="team_scale" type="number" step="1" min="1" value="1" class="form-control">
-                                                    <span class="input-group-append">
-                                                        <span class="input-group-text" id="team_scale_text">人</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" name="os_types">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">機種OS</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="input-group">
-                                                    <input name="os" type="text" tokenfield="yes" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" name="proglang_tools">
-                                            <div class="col-2">
-                                                <label class="pt-2 float-right">言語やツール</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="input-group">
-                                                    <input name="proglang_tools" type="text" tokenfield="yes" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" name="db_types">
-                                            <div class="col-2">
-                                                <label class="float-right" style="text-align: right">DBや<br>DCミドルウェア</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="input-group">
-                                                    <input name="db" type="text" tokenfield="yes" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 text-center" style="display: flex">
-                                        <button type="button" class="btn btn-danger fa fa-times-circle table-button" onclick="delete_row(this);"></button>
-                                    </div>
-                                </div>
-                            </li> -->
                         </ul>
                     </div>
                 </div>

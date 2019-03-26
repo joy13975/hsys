@@ -3,10 +3,10 @@
 let today = new Date();
 let today_date_str = today.toISOString().slice(0, 10);
 
-$(document).ready(function() {
-    // Default all dates to today.
-    let date_eles = $('input[type=date]');
-    date_eles.val(today_date_str);
+$(function() {
+    // Initialize datepickers
+    let date_eles = $('input[is-datepicker=yes]');
+    init_datepicker(date_eles);
 
     // Auto update age.
     let age_text = $("#age_text");
@@ -26,6 +26,15 @@ $(document).ready(function() {
     tfs.html("");
 })
 
+function init_datepicker(dp) {
+    dp.datepicker({
+        format: 'yyyy/mm/dd',
+        todayHighlight: true
+    });
+
+    dp.datepicker("update", today);
+}
+
 function delete_row(ele) {
     $(ele).parents('li').remove();
 }
@@ -40,66 +49,96 @@ function add_row(ele, template) {
         insert_after = rows.last();
     }
 
-    switch(template) {
-    	case "experience": 
-    	new_row = build_exp_row();
-    	break;
-    	case "qualification":
-    	new_row = build_qual_row();
-    	break;
-    	default:
-    	console.log("Unknown template name: " + template);
+    switch (template) {
+        case "experience":
+            add_exp_row(insert_after);
+            break;
+        case "qualification":
+            add_qual_row(insert_after);
+            break;
+        default:
+            console.log("Unknown template name: " + template);
     }
-    insert_after.after(new_row);
 }
 
 let qual_row_id = 0;
-function build_qual_row() {
-	qual_row_id ++;
-    return `<li class="list-group-item">
+
+function add_qual_row(insert_after) {
+    qual_row_id++;
+
+    function ri(name) {
+        return name + '-' + qual_row_id;
+    }
+    datepicker_name = ri('qual_date');
+
+    row = $(`<li class="list-group-item">
         <div class="row">
             <div class="col-1">
             	<h4><span class="badge badge-secondary span-center-text" style="display: flex">#` + qual_row_id + `</span></h4>
             </div>
             <div class="col-6">
-                <input type="text" class="form-control" placeholder="例：普通自動車運転免許" required>
+                <input type="text" class="form-control" name="` + ri('qual_name') + `" placeholder="例：普通自動車運転免許" required>
             </div>
             <div class="col-3">
-                <input type="date" class="form-control">
+                <input type="text" is-datepicker="yes" name="` + datepicker_name + `" class="form-control" required>
             </div>
             <div class="col-2 text-center">
                 <button type="button" class="btn btn-danger fa fa-times-circle table-button" onclick="delete_row(this);"></button>
             </div>
         </div>
-    </li>`;
+    </li>`);
+
+    insert_after.after(row);
+
+    dp = $("input[name=" + datepicker_name + "]");
+    init_datepicker(dp);
 }
 
 let exp_row_id = 0;
-function build_exp_row() {
-	exp_row_id ++;
-    return `
+
+function add_exp_row(insert_after) {
+    exp_row_id++;
+
+    function ri(name) {
+        return name + '-' + exp_row_id;
+    }
+    case_start_dp_name = ri('case_start');
+    case_end_dp_name = ri('case_end')
+
+    cb_analysis_id = ri('cb_analysis');
+    cb_req_def_id = ri('cb_req_def');
+    cb_basic_design_id = ri('cb_basic_design');
+    cb_detailed_design_id = ri('cb_detailed_design');
+    cb_programming_id = ri('cb_programming');
+    cb_unit_test_id = ri('cb_unit_test');
+    cb_integrated_test_id = ri('cb_integrated_test');
+    cb_overall_test_id = ri('cb_overall_test');
+    cb_maintenance_and_application_id = ri('cb_maintenance_and_application');
+    cb_helpdesk_id = ri('cb_helpdesk');
+
+    row = $(`
 		<li class="list-group-item">
 			<div class="row">
-				<h4><span class="badge badge-secondary span-center-text" style="display: flex">#` 
-					+ exp_row_id + `</span></h4>
+				<h4><span class="badge badge-secondary span-center-text" style="display: flex">#` +
+        exp_row_id + `</span></h4>
 			</div>
 		    <div class="row">
 		        <div class="col-11">
-		            <div class="row" name="case_duration">
+		            <div class="row" name="` + ri('case_duration') + `">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">開始</label>
 		                </div>
 		                <div class="col-4">
-		                    <input id="exp_start_picker" name="start" type="date" class="form-control">
+		                    <input type="text" is-datepicker="yes" name="` + case_start_dp_name + `" class="form-control">
 		                </div>
 		                <div class="col-1">
 		                    <label class="pt-2 float-right">終了</label>
 		                </div>
 		                <div class="col-4">
-		                    <input id="exp_end_picker" name="end" type="date" class="form-control">
+		                    <input type="text" is-datepicker="yes" name="` + case_end_dp_name + `" class="form-control">
 		                </div>
 		            </div>
-		            <div class="row" name="case_name">
+		            <div class="row" name="` + ri('case_name') + `">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">案件名</label>
 		                </div>
@@ -107,7 +146,7 @@ function build_exp_row() {
 		                    <input type="text" class="form-control" placeholder="例：〇〇ソフトウェアエンジニア" required>
 		                </div>
 		            </div>
-		            <div class="row" name="job_desc">
+		            <div class="row" name="` + ri('job_desc') + `">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">内容</label>
 		                </div>
@@ -115,81 +154,81 @@ function build_exp_row() {
 		                    <textarea class="form-control" rows="3" min required></textarea>
 		                </div>
 		            </div>
-		            <div class="row" name="tasks">
+		            <div class="row" name="` + ri('tasks') + `">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">業務</label>
 		                </div>
 		                <div class="col-9">
 		                    <div class="row group-border m-0 pb-2">
 		                        <div class="col-12">
-		                            <div class="row">
+		                            <div class="row ml-0 mr-0">
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_bunseki_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_bunseki_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_analysis_id + `" name="` + cb_analysis_id + `">
+		                                    <label class="form-check-label" for="` + cb_analysis_id + `">
 		                                        調査分析
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_teigi_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_teigi_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_req_def_id + `" name="` + cb_req_def_id + `">
+		                                    <label class="form-check-label" for="` + cb_req_def_id + `">
 		                                        要件定義
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_kihon_sekkei_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_kihon_sekkei_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_basic_design_id + `" name="` + cb_basic_design_id + `">
+		                                    <label class="form-check-label" for="` + cb_basic_design_id + `">
 		                                        基本設計
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_shousai_sekkei_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_shousai_sekkei_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_detailed_design_id + `" name="` + cb_detailed_design_id + `">
+		                                    <label class="form-check-label" for="` + cb_detailed_design_id + `">
 		                                        詳細設計
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_programming_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_programming_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_programming_id + `" name="` + cb_programming_id + `">
+		                                    <label class="form-check-label" for="` + cb_programming_id + `">
 		                                        プログラミング
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_unit_test_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_unit_test_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_unit_test_id + `" name="` + cb_unit_test_id + `">
+		                                    <label class="form-check-label" for="` + cb_unit_test_id + `">
 		                                        単体テスト
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_integ_test_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_integ_test_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_integrated_test_id + `" name="` + cb_integrated_test_id + `">
+		                                    <label class="form-check-label" for="` + cb_integrated_test_id + `">
 		                                        結合テスト
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_all_test_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_all_test_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_overall_test_id + `" name="` + cb_overall_test_id + `">
+		                                    <label class="form-check-label" for="` + cb_overall_test_id + `">
 		                                        総合テスト
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_maintain_apply_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_maintain_apply_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_maintenance_and_application_id + `" name="` + cb_maintenance_and_application_id + `">
+		                                    <label class="form-check-label" for="` + cb_maintenance_and_application_id + `">
 		                                        保守．運用
 		                                    </label>
 		                                </div>
 		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" value="" id="cb_helpdesk_` + exp_row_id + `">
-		                                    <label class="form-check-label" for="cb_helpdesk_` + exp_row_id + `">
+		                                    <input class="form-check-input" type="checkbox" value="" id="` + cb_helpdesk_id + `" name="` + cb_helpdesk_id + `">
+		                                    <label class="form-check-label" for="` + cb_helpdesk_id + `">
 		                                        ヘルプデスク
 		                                    </label>
 		                                </div>
 		                            </div>
-		                            <div class="row">
+		                            <div class="row mt-2">
 		                                <div class="col-2">
-		                                    <label class="pt-2 float-right">その他</label>
+		                                    <label class="pt-2">その他</label>
 		                                </div>
 		                                <div class="col-10">
-		                                    <input type="text" class="form-control" name="task_other">
+		                                    <input type="text" class="form-control" name="` + ri('task_other') + `">
 		                                </div>
 		                            </div>
 		                        </div>
@@ -256,5 +295,7 @@ function build_exp_row() {
 		        </div>
 		    </div>
 		</li>
-	`;
+	`);
+
+    insert_after.after(row);
 }
