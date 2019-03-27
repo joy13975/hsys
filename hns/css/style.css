@@ -16,7 +16,7 @@
     border-radius: .25rem;
 }
 
-.table-splitter {
+table-splitter {
 	display: none;
 }
 
@@ -25,4 +25,9 @@
     align-items: center;
     justify-content: center;
     height: 36px;
+}
+
+.row-badge {
+	width: 60px !important;
+	display: flex !important;
 }
