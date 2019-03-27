@@ -6,16 +6,109 @@ let today_date_str = today.toISOString().slice(0, 10);
 $(function() {
     initSpecialInputs($('html'));
 
-    // Auto update age.
-    let ageText = $("#age_text");
-    let bdPicker = $('#bd_picker')
-    bdPicker.on('change', function() {
-        yd = new Date(today - new Date(bdPicker.val())).getFullYear() - 1970;
-        ageText.html(yd + "歳");
-    });
-})
+    // Init age.
+    onBrithdateChange($('#bd_picker'));
+});
 
-function onNumberFocusOut(ele, min, max, step) {
+function onExampleBtnClick(ele) {
+    $('input[name=lastname_kanji]').val('派遣');
+    $('input[name=firstname_kanji]').val('太郎');
+    $('input[name=lastname_furigana]').val('ハケン');
+    $('input[name=firstname_furigana]').val('タロウ');
+    $('input[name=lastname_eng]').val('Haken');
+    $('input[name=firstname_eng]').val('Tarou');
+    $('input[name=employer]').val('株式会社HNS');
+    $('input[name=birthdate]').datepicker("update", new Date('1992-01-03'));
+    $('input[name=zipcode]').val('413-0010')
+
+}
+
+function onAddressClick(ele) {
+    setAddress1($(ele).html().trim());
+    $('#address_modal').modal('hide');
+}
+
+function askForAddress(results) {
+    // Multi address zipcode example: 0790177
+    const modal = $('#address_modal');
+    modal.modal('show', {
+        keyboard: false,
+        backdrop: 'static'
+    });
+
+    const list = modal.find('#address_list');
+    list.empty();
+    results.forEach((r) => {
+        const addr = r['address1'] + r['address2'] + r['address3'];
+        list.append(`
+		<a href="#" class="list-group-item list-group-item-action" onclick="onAddressClick(this)">
+            ` + addr + `
+        </a>
+        	`);
+    });
+}
+
+function setAddress1(addr) {
+    $('input[name=address1]').val(addr);
+}
+
+const zipcodeApi = `http://zipcloud.ibsnet.co.jp/api/search`;
+
+function searchAddress(zipcode, callback) {
+    $.getJSON(zipcodeApi + '?callback=?', {
+        'zipcode': zipcode
+    }, callback);
+}
+
+function sanitizeZipcode(zipcode) {
+    console.log('TODO: sanitizeZipcode()');
+    return zipcode;
+}
+
+function onZipcodeFocusout(ele) {
+    const zipcode = sanitizeZipcode($(ele).val());
+    var succeeded = false;
+    if (zipcode) {
+        searchAddress(zipcode, (data, status, xhr) => {
+            let addrVal = '';
+            if (data['status'] == 200) {
+                const results = data['results'];
+                if (results) {
+                    if (results.length > 1) {
+                        askForAddress(results);
+                    } else {
+                        const result = results[0];
+                        addrVal = result['address1'] + result['address2'] + result['address3'];
+                    }
+                } else {
+                    addrVal = "エラー：郵便番号不明"
+                    succeeded = false;
+                }
+            } else {
+                addrVal = "エラー(" + data.status + ")：" + data.message;
+                alert(addrVal);
+                succeeded = false;
+            }
+
+            setAddress1(addrVal);
+        });
+    }
+
+    console.log('ok?' + succeeded);
+    if (succeeded) {
+        $(ele).css('border-color', '#ced4da');
+    } else {
+        $(ele).css('border-color', 'red');
+    }
+}
+
+function onBrithdateChange(ele) {
+    let $ele = $(ele);
+    let yd = new Date(today - new Date($ele.val())).getFullYear() - 1970;
+    $ele.next('span').find('#age_text').html(yd + "歳");
+}
+
+function onNumberFocusout(ele, min, max, step) {
     console.log(ele, "min=" + min, "max=" + max, "step=" + step);
 }
 
@@ -254,7 +347,7 @@ function addExpRow(insertAfter) {
 		                </div>
 		                <div class="col-3">
 		                    <div class="input-group">
-		                        <input name="` + ri('total_scale') + `" type="number" onfocusout="onNumberFocusOut(this, 1, "none", 1)" step="1" min="1" value="1" class="form-control">
+		                        <input name="` + ri('total_scale') + `" type="number" onfocusout="onNumberFocusout(this, 1, "none", 1)" step="1" min="1" value="1" class="form-control">
 		                        <span class="input-group-append">
 		                            <span class="input-group-text" id="total_scale_text">人</span>
 		                        </span>
@@ -265,7 +358,7 @@ function addExpRow(insertAfter) {
 		                </div>
 		                <div class="col-3">
 		                    <div class="input-group">
-		                        <input name="` + ri('team_scale') + `" type="number" onfocusout="onNumberFocusOut(this, 1, "none", 1)" step="1" min="1" value="1" class="form-control">
+		                        <input name="` + ri('team_scale') + `" type="number" onfocusout="onNumberFocusout(this, 1, "none", 1)" step="1" min="1" value="1" class="form-control">
 		                        <span class="input-group-append">
 		                            <span class="input-group-text" id="team_scale_text">人</span>
 		                        </span>
