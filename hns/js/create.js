@@ -65,12 +65,25 @@ function sanitizeZipcode(zipcode) {
     return zipcode;
 }
 
+function zipcodeErrorHighlight(ele, valid) {
+    const $ele = $(ele);
+    // const valid = $ele.attr('valid') === 'true';
+    console.log('valid=' + valid);
+    if (valid) {
+        $ele.css('border-color', '#ced4da');
+    } else {
+        $ele.css('border-color', 'red');
+    }
+}
+
 function onZipcodeFocusout(ele) {
     const zipcode = sanitizeZipcode($(ele).val());
-    var succeeded = false;
+    const addr1Ele = $('input[name=address1]');
+
     if (zipcode) {
-        searchAddress(zipcode, (data, status, xhr) => {
+        searchAddress(zipcode, function(data, status, xhr) {
             let addrVal = '';
+            let valid = false;
             if (data['status'] == 200) {
                 const results = data['results'];
                 if (results) {
@@ -80,25 +93,21 @@ function onZipcodeFocusout(ele) {
                         const result = results[0];
                         addrVal = result['address1'] + result['address2'] + result['address3'];
                     }
+                    valid = true;
                 } else {
                     addrVal = "エラー：郵便番号不明"
-                    succeeded = false;
                 }
             } else {
                 addrVal = "エラー(" + data.status + ")：" + data.message;
                 alert(addrVal);
-                succeeded = false;
             }
+            addr1Ele.attr('valid', valid);
 
             setAddress1(addrVal);
+            zipcodeErrorHighlight(ele, valid);
         });
-    }
-
-    console.log('ok?' + succeeded);
-    if (succeeded) {
-        $(ele).css('border-color', '#ced4da');
     } else {
-        $(ele).css('border-color', 'red');
+        zipcodeErrorHighlight(ele, /*valid=*/ false);
     }
 }
 

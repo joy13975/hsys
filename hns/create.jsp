@@ -55,6 +55,8 @@
         </div>
         <div class="row">
             <form>
+                <!-- Prevent implicit submission of the form -->
+                <button type="submit" disabled style="display: none" aria-hidden="true"></button>
                 <div class="container">
                     <div id="personal_info">
                         <h2 class="pt-2">個人</h2>
@@ -272,7 +274,7 @@
                     <div class="row space"></div>
                     <div class="row pt-2">
                         <div class="col-md text-center">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">提出</button>
+                            <button type="submit" onclick="console.log('Here')" class="btn btn-primary btn-lg btn-block">提出</button>
                         </div>
                     </div>
                 </div>
