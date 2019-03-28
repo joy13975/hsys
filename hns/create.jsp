@@ -44,20 +44,25 @@
         </div>
     </div>
     <!-- Main Form -->
-    <div class="container">
+    <div class="container-fluid">
         <div class="row pt-4">
-            <div class="row-lg-8">
+            <div class="col-lg-9">
                 <h1>HNS スキルシート Web</h1>
             </div>
-            <div class="row-lg-4" style="display: flex;">
-                <button class="form-control float-right ml-4 my-auto" onclick="onExampleBtnClick(this)">例を打ち込む</button>
+            <div class="col-lg-3">
+                <div class="row">
+                    <button class="form-control btn-info" onclick="onExampleBtnClick(this)">例を打ち込む</button>
+                </div>
+                <div class="row">
+                    <button class="form-control btn-primary" onclick="onSubmitClick()">提出</button>
+                </div>
             </div>
         </div>
         <div class="row">
-            <form>
+            <form action="update_personnel.jsp" method="post">
                 <!-- Prevent implicit submission of the form -->
                 <button type="submit" disabled style="display: none" aria-hidden="true"></button>
-                <div class="container">
+                <div class="container-fluid">
                     <div id="personal_info">
                         <h2 class="pt-2">個人</h2>
                         <div class="row">
@@ -155,7 +160,7 @@
                                 <label class="pt-2 float-right">住所郵便番号</label>
                             </div>
                             <div class="col-10">
-                                <input type="text" class="form-control" name="zipcode" placeholder="例：531-0071" onfocusout="onZipcodeFocusout(this)" required>
+                                <input type="text" class="form-control" name="zipcode" placeholder="例：531-0071" onblur="onZipcodeBlur(this)" required>
                             </div>
                         </div>
                         <div class="row">
@@ -196,7 +201,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="station" placeholder="例：梅田" required>
+                                    <input type="text" class="form-control" name="station" placeholder="例：中津" required>
                                     <span class="input-group-append">
                                         <span class="input-group-text">駅</span>
                                     </span>
@@ -209,7 +214,7 @@
                                 <label class="pt-2 float-right">最終学歴</label>
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" placeholder="例：大阪大学情報工学博士" required>
+                                <input type="text" class="form-control" name='degree' placeholder="例：大阪大学情報工学博士" required>
                             </div>
                             <div class="col-5">
                                 <div class="input-group">
@@ -227,7 +232,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="card">
-                                    <ul class="list-group list-group-flush">
+                                    <ul class="list-group list-group-flush" id="qual_list">
                                         <li class="list-group-item">
                                             <div class="row">
                                                 <div class="col-7 text-center">
@@ -248,7 +253,7 @@
                         </div>
                         <div class="row pt-2">
                             <div class="col text-center">
-                                <button type="button" class="btn btn-info fa fa-plus table-button" onclick="addRow(this, 'qualification');"></button>
+                                <button type="button" class="btn btn-info fa fa-plus table-button" id="add_qual_btn" onclick="addRow(this, 'qualification');"></button>
                             </div>
                         </div>
                     </div>
@@ -257,7 +262,7 @@
                         <h2 class="pt-2">経歴</h2>
                         <div class="row">
                             <div class="card">
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush" id="exp_list">
                                     <li class="list-group-item">
                                         <small class="form-text text-muted">*職務：PM（プロジェクトマネージャー）　PL（プロジェクトリーダー）　SE（システム．エンジニア） SE/PG（SE兼PG） PG（プログラマー） OP（オプレータ）</small>
                                     </li>
@@ -267,14 +272,14 @@
                         </div>
                         <div class="row pt-2">
                             <div class="col text-center">
-                                <button type="button" class="btn btn-info fa fa-plus table-button" onclick="addRow(this, 'experience');"></button>
+                                <button type="button" class="btn btn-info fa fa-plus table-button" id="add_exp_btn" onclick="addRow(this, 'experience');"></button>
                             </div>
                         </div>
                     </div>
                     <div class="row space"></div>
                     <div class="row pt-2">
                         <div class="col-md text-center">
-                            <button type="submit" onclick="console.log('Here')" class="btn btn-primary btn-lg btn-block">提出</button>
+                            <button onclick="onSubmitClick()" class="btn btn-primary btn-lg btn-block">提出</button>
                         </div>
                     </div>
                 </div>

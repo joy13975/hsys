@@ -31,3 +31,9 @@ table-splitter {
 	width: 60px !important;
 	display: flex !important;
 }
+
+form {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}

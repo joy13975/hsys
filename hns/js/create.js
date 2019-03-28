@@ -2,6 +2,8 @@
 
 let today = new Date();
 let today_date_str = today.toISOString().slice(0, 10);
+let qualRowID = 0;
+let expRowID = 0;
 
 $(function() {
     initSpecialInputs($('html'));
@@ -9,6 +11,11 @@ $(function() {
     // Init age.
     onBrithdateChange($('#bd_picker'));
 });
+
+function onSubmitClick() {
+	console.log('TODO: onSubmitClick()');
+	$('form').trigger('submit');
+}
 
 function onExampleBtnClick(ele) {
     $('input[name=lastname_kanji]').val('派遣');
@@ -19,8 +26,53 @@ function onExampleBtnClick(ele) {
     $('input[name=firstname_eng]').val('Tarou');
     $('input[name=employer]').val('株式会社HNS');
     $('input[name=birthdate]').datepicker("update", new Date('1992-01-03'));
-    $('input[name=zipcode]').val('413-0010')
+    $('input[name=zipcode]').val('531-0071').trigger('blur');
+    $('input[name=address2]').val('1-3-6');
+    $('input[name=address3]').val('最高マンション111号');
+    $('input[name=train]').val('御堂筋線');
+    $('input[name=station]').val('中津');
+    $('input[name=degree]').val('大阪大学情報工学博士');
 
+    qualRowID = 0;
+    clearList('#qual_list', 1);
+
+    $('#add_qual_btn').trigger('click');
+    $('input[name=qual_name-1]').val('普通自動車運転免許');
+    $('input[name=qual_date-1]').datepicker("update", new Date('2015-04-01'));
+
+    $('#add_qual_btn').trigger('click');
+    $('input[name=qual_name-2]').val('初級システムアドミニストレータ試験');
+    $('input[name=qual_date-2]').datepicker("update", new Date('2015-05-01'));
+
+    expRowID = 0;
+    clearList('#exp_list', 1)
+
+    $('#add_exp_btn').trigger('click');
+    $('input[name=case_start-1]').datepicker("update", new Date('2015-04-01'));
+    $('input[name=case_end-1]').datepicker("update", new Date('2017-03-31'));
+    $('input[name=case_name-1]').val('〇〇ソフトウェアエンジニア');
+    $('textarea[name=case_desc-1]').val('素晴らしいERPの開発を担当しました。');
+    $('input[name=cb_req_def-1]').attr('checked', true);
+    $('input[name=cb_basic_design-1]').attr('checked', true);
+    $('input[name=cb_detailed_design-1]').attr('checked', true);
+    $('input[name=cb_programming-1]').attr('checked', true);
+    $('input[name=cb_unit_test-1]').attr('checked', true);
+    $('input[name=cb_helpdesk-1]').attr('checked', true);
+    $('input[name=total_scale-1]').val(20);
+    $('input[name=team_scale-1]').val(5);
+
+    $('input[name=os-1]').tokenfield('setTokens', ['Linux', 'Windows', 'MacOS']);
+    $('input[name=proglang_tools-1]').tokenfield('setTokens', ['C', 'C++', 'Lisp']);
+    $('input[name=dbms-1]').tokenfield('setTokens', ['Microsoft SQL Server', 'MongoDB']);
+}
+
+function clearList(selector, offset=0) {
+    const rows = () => {
+        return $(selector + ' li');
+    }
+    while (rows().length > offset) {
+        rows()[offset].remove();
+    }
 }
 
 function onAddressClick(ele) {
@@ -67,8 +119,6 @@ function sanitizeZipcode(zipcode) {
 
 function zipcodeErrorHighlight(ele, valid) {
     const $ele = $(ele);
-    // const valid = $ele.attr('valid') === 'true';
-    console.log('valid=' + valid);
     if (valid) {
         $ele.css('border-color', '#ced4da');
     } else {
@@ -76,7 +126,7 @@ function zipcodeErrorHighlight(ele, valid) {
     }
 }
 
-function onZipcodeFocusout(ele) {
+function onZipcodeBlur(ele) {
     const zipcode = sanitizeZipcode($(ele).val());
     const addr1Ele = $('input[name=address1]');
 
@@ -117,8 +167,14 @@ function onBrithdateChange(ele) {
     $ele.next('span').find('#age_text').html(yd + "歳");
 }
 
-function onNumberFocusout(ele, min, max, step) {
-    console.log(ele, "min=" + min, "max=" + max, "step=" + step);
+function onNumberBlur(ele, minV, maxV, step) {
+    const $ele = $(ele);
+    let v = $ele.val();
+    v = Math.round(v / step) * step;
+    if (minV != 'none' && v < minV) v = minV;
+    if (maxV != 'none' && v > maxV) v = maxV;
+
+    $ele.val(v);
 }
 
 function initSpecialInputs(root) {
@@ -178,8 +234,6 @@ function addRow(ele, template) {
     }
 }
 
-let qualRowID = 0;
-
 function addQualRow(insertAfter) {
     qualRowID++;
 
@@ -187,7 +241,7 @@ function addQualRow(insertAfter) {
         return name + '-' + qualRowID;
     }
 
-    let row = $(`<li class="list-group-item">
+    let row = $(`<li class="list-group-item" row-id=` + qualRowID + `>
         <div class="row">
             <div class="col-1">
             	<h4><span class="badge badge-secondary span-center-text row-badge">#` + qualRowID + `</span></h4>
@@ -208,8 +262,6 @@ function addQualRow(insertAfter) {
     initSpecialInputs(row);
 }
 
-let expRowID = 0;
-
 function addExpRow(insertAfter) {
     expRowID++;
 
@@ -229,14 +281,14 @@ function addExpRow(insertAfter) {
     cbHelpdeskID = ri('cb_helpdesk');
 
     let row = $(`
-		<li class="list-group-item">
+		<li class="list-group-item" row-id=` + expRowID + `>
 			<div class="row">
 				<h4><span class="badge badge-secondary span-center-text row-badge ml-2">#` +
         expRowID + `</span></h4>
 			</div>
 		    <div class="row">
 		        <div class="col-11">
-		            <div class="row" name="` + ri('case_duration') + `">
+		            <div class="row">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">開始</label>
 		                </div>
@@ -250,23 +302,23 @@ function addExpRow(insertAfter) {
 		                    <input type="text" is-datepicker="yes" name="` + ri('case_end') + `" class="form-control">
 		                </div>
 		            </div>
-		            <div class="row" name="` + ri('case_name') + `">
+		            <div class="row">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">案件名</label>
 		                </div>
 		                <div class="col-10">
-		                    <input type="text" class="form-control" placeholder="例：〇〇ソフトウェアエンジニア" required>
+		                    <input type="text" class="form-control" name="` + ri('case_name') + `" placeholder="例：〇〇ソフトウェアエンジニア" required>
 		                </div>
 		            </div>
-		            <div class="row" name="` + ri('job_desc') + `">
+		            <div class="row">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">内容</label>
 		                </div>
 		                <div class="col-10">
-		                    <textarea class="form-control" rows="3" min required></textarea>
+		                    <textarea class="form-control" rows="3" name="` + ri('case_desc') + `" required></textarea>
 		                </div>
 		            </div>
-		            <div class="row" name="` + ri('tasks') + `">
+		            <div class="row">
 		                <div class="col-2">
 		                    <label class="pt-2 float-right">業務</label>
 		                </div>
@@ -356,7 +408,7 @@ function addExpRow(insertAfter) {
 		                </div>
 		                <div class="col-3">
 		                    <div class="input-group">
-		                        <input name="` + ri('total_scale') + `" type="number" onfocusout="onNumberFocusout(this, 1, "none", 1)" step="1" min="1" value="1" class="form-control">
+		                        <input name="` + ri('total_scale') + `" type="number" onblur="onNumberBlur(this, 1, 'none', 1)" step="1" min="1" value="1" class="form-control">
 		                        <span class="input-group-append">
 		                            <span class="input-group-text" id="total_scale_text">人</span>
 		                        </span>
@@ -367,7 +419,7 @@ function addExpRow(insertAfter) {
 		                </div>
 		                <div class="col-3">
 		                    <div class="input-group">
-		                        <input name="` + ri('team_scale') + `" type="number" onfocusout="onNumberFocusout(this, 1, "none", 1)" step="1" min="1" value="1" class="form-control">
+		                        <input name="` + ri('team_scale') + `" type="number" onblur="onNumberBlur(this, 1, 'none', 1)" step="1" min="1" value="1" class="form-control">
 		                        <span class="input-group-append">
 		                            <span class="input-group-text" id="team_scale_text">人</span>
 		                        </span>
@@ -400,7 +452,7 @@ function addExpRow(insertAfter) {
 		                </div>
 		                <div class="col-10">
 		                    <div class="input-group">
-		                        <input name="` + ri('db') + `" type="text" is-tokenfield="yes" class="form-control">
+		                        <input name="` + ri('dbms') + `" type="text" is-tokenfield="yes" class="form-control">
 		                    </div>
 		                </div>
 		            </div>
