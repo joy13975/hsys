@@ -2,6 +2,7 @@
 <html lang="jp">
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>株式会社HNS - Create</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="css/style.css">
@@ -13,7 +14,7 @@
     <script src="../js/jquery-3.3.1.min.js"></script>
     <!-- Popper JS 1.14.7 -->
     <script src="../js/popper-1.14.7.min.js"></script>
-    <!-- 4.3.1 compiled JavaScript -->
+    <!-- Bootstrap 4.3.1 compiled JavaScript -->
     <script src="../js/bootstrap-4.3.1.min.js"></script>
     <!-- Bootstrap 4 Switch Button (Toggle) -->
     <link rel="stylesheet" href="../css/bootstrap4-toggle.min.css">
@@ -25,7 +26,6 @@
     <!-- Bootstrap Datepicker 1.6.4 -->
     <script src="../js/bootstrap-datepicker-1.6.4.min.js"></script>
     <link rel="stylesheet" href="../css/bootstrap-datepicker-1.6.4.min.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
 <body>
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="row">
-            <form action="update_personnel.jsp" method="post">
+            <form action="create_results.jsp" method="post">
                 <!-- Prevent implicit submission of the form -->
                 <button type="submit" disabled style="display: none" aria-hidden="true"></button>
                 <div class="container-fluid">

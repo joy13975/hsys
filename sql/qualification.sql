@@ -1,0 +1,4 @@
+CREATE TABLE qualification(
+	id INT AUTO_INCREMENT,
+	PRIMARY KEY (id)
+);
