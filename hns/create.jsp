@@ -44,8 +44,8 @@
         </div>
     </div>
     <!-- Main Form -->
-    <div class="container-fluid">
-        <div class="row pt-4">
+    <div class="container-fluid pt-4">
+        <div class="row mx-auto" style="width: 90%">
             <div class="col-lg-9">
                 <h1>HNS スキルシート Web</h1>
             </div>
@@ -261,13 +261,15 @@
                     <div id="experiences">
                         <h2 class="pt-2">経歴</h2>
                         <div class="row">
-                            <div class="card">
-                                <ul class="list-group list-group-flush" id="exp_list">
-                                    <li class="list-group-item">
-                                        <small class="form-text text-muted">*職務：PM（プロジェクトマネージャー）　PL（プロジェクトリーダー）　SE（システム．エンジニア） SE/PG（SE兼PG） PG（プログラマー） OP（オプレータ）</small>
-                                    </li>
-                                    <table-splitter>
-                                </ul>
+                            <div class="col">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush" id="exp_list">
+                                        <li class="list-group-item">
+                                            <small class="form-text text-muted">*職務：PM（プロジェクトマネージャー）　PL（プロジェクトリーダー）　SE（システム．エンジニア） SE/PG（SE兼PG） PG（プログラマー） OP（オプレータ）</small>
+                                        </li>
+                                        <table-splitter>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="row pt-2">
